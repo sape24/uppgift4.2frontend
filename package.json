@@ -1,0 +1,16 @@
+{
+  "name": "uppgift4.2frontend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build --no-cache"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "parcel": "^2.15.4"
+  }
+}
