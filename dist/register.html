@@ -1,0 +1,54 @@
+<!DOCTYPE html><html lang="sv"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/uppgift4.2frontend.2cdaf7bc.css">
+    <script src="/uppgift4.2frontend.1fcc916e.js" type="module"></script>
+    <title>Registrering</title>
+</head>
+<body>
+    <header>  
+        <nav class="desktopmenu"> <!--Desktopmenyn-->
+            <ul>
+                <li><a href="/index.html">Startsida</a></li>
+                <li><a href="/register.html">Registrering</a></li>
+            </ul>
+        </nav> 
+    
+            <button class="menu-btn open" id="open-menu"> <!--Knapp för att toggle fram hamburgermenyn-->
+                    <span class="menu-icon">
+                        <span class="bars"></span>
+                        <span class="bars"></span>
+                        <span class="bars"></span>
+                    </span>
+                    <span class="menu-text">Meny</span>
+            </button>
+
+        <nav class="mobilemenu" id="mobilemenu"> <!--Hamburgermeny för mobila enheter med en knapp för att stänga ner den-->
+            <button class="menu-btn close" id="close-menu">
+                <span class="menu-icon">
+                    <span class="bars cross1"></span>
+                    <span class="bars cross2"></span>
+                </span>
+                <span class="menu-text">Stäng meny</span>
+            </button>
+            <ul>
+                <li><a href="/index.html">Startsida</a></li>
+                <li><a href="/register.html">Registrering</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="formcontainer">
+        <form class="form">
+            <h2><u>Registrera dig!</u></h2>
+            <p class="error" id="errormessage"></p>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required="">
+            <br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required="">
+            <br>
+            <input type="submit" id="button" value="Bekräfta">
+        </form>
+    </div>
+
+</body></html>

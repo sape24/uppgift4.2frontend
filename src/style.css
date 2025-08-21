@@ -1,0 +1,153 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    width: 100%;
+    background-color: #0D3C5B;
+    height: 150px;
+}
+
+.mobilemenu{
+    background-color: #0D3C5B;     
+    box-shadow: 0 0px 10px rgb(124, 123, 123);
+    font-size: 1em;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    width: 45%;
+    display: none;
+    z-index: 4;
+}
+
+.mobilemenu ul{
+    width: 100%;
+    list-style-type: none;
+    text-align: center;
+    padding: 0;
+}
+
+.mobilemenu li{
+   padding: 5%;
+   margin-bottom: 15%;
+   width: 100%;
+}
+
+.mobilemenu a {
+   color: white; 
+   padding: 1%;
+   font-size: 1.2rem;
+   font-weight: bold;
+}
+
+.menu-btn{    
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+    background-color: #0D3C5B;
+    border: 2px solid white;
+    cursor: pointer;
+    display: none;
+}
+.open{
+    margin: 0 1em;
+}
+.menu-icon{
+    margin-right: 10px;
+}
+.bars{
+    display: block;  
+    width: 20px;
+    height: 3px;
+    background-color: white;
+    margin: 5px 0;
+}
+
+.menu-text{
+    margin-left: 10px;
+    font-size: 1.5em;
+    color: white;
+    font-weight: bold;
+}
+
+.close{
+    margin: 1em 1.5em;
+    padding: 10px 15px
+}
+
+.cross1{
+    width: 25px;    
+    transform: rotate(45deg);
+    position: relative;
+    top: 5px;
+}
+
+.cross2{
+    width: 25px; 
+    transform: rotate(135deg);
+    position: relative;
+    top: -3px;
+}
+
+.desktopmenu ul{
+    list-style-type: none;
+    display: flex;
+    gap: 10%;
+}
+
+.desktopmenu a{      
+    color: white;
+    font-size: 1.6em;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+@media  (max-width: 800px){ 
+    .desktopmenu{
+        display: none;
+    }
+
+    .menu-btn{ 
+        display:block;
+        display: flex !important;
+
+    }
+
+    .mobilemenu{
+        display: none;
+    }
+}
+
+.formcontainer{
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form{
+    background-color: #0D3C5B;
+    color: white;
+    padding: 5%;
+    margin: 5%;
+    border-radius: 12px;
+    line-height: 2em;
+    font-size: 1.7em;
+}
+
+.form label{
+    font-weight: bold;
+}
+
+.form input{
+    padding: 7px;
+    width: 250px;
+}
