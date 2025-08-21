@@ -680,12 +680,6 @@ function toggleMenu() {
     if (style.display === "none") mobileMenuEl.style.display = "block";
     else mobileMenuEl.style.display = "none";
 }
-document.querySelector(".form").addEventListener("submit", (event)=>{
-    event.preventDefault() //förhindrar att sidan laddas om
-    ;
-    register() //anropar addwork funktionen 
-    ;
-});
 async function register() {
     let user = {
         username: document.getElementById("username").value,
@@ -713,6 +707,72 @@ async function register() {
         console.error('Det uppstod ett fel:', error.message);
     }
 }
+async function login() {
+    let user = {
+        username: document.getElementById("username").value,
+        password: document.getElementById("password").value
+    };
+    if (!user.username || !user.password) {
+        const error = document.getElementById("errormessage");
+        error.textContent = "Du m\xe5ste fylla i alla f\xe4lt!";
+        return;
+    }
+    try {
+        let response = await fetch('https://uppgift4-1backend.onrender.com/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' //anger att det är json som skickas
+            },
+            body: JSON.stringify(user) //user objekt blir json sträng
+        });
+        if (!response.ok) throw new Error("N\xe4tverksproblem - felaktigt svar fr\xe5n servern");
+        let data = await response.json();
+        localStorage.setItem('token', data.response.token);
+        console.log("token sparad", data.response.token);
+        console.log(data);
+        let sucessfulLogin = await _protected();
+        if (sucessfulLogin) window.location.href = "protected.html";
+        else {
+            console.error("\xc5tkomst nekad: token ogiltig eller saknas");
+            let error = document.getElementById("errormessage");
+            error.textContent = "Inloggning misslyckades var god f\xf6rs\xf6k igen";
+        }
+    } catch (error) {
+        console.error('Det uppstod ett fel:', error.message);
+    }
+}
+async function _protected() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        console.error("ingen token hittades");
+        return false;
+    }
+    try {
+        let response = await fetch('https://uppgift4-1backend.onrender.com/api/protected', {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        });
+        if (!response.ok) return false;
+        let data = await response.json();
+        console.log(data);
+        return true;
+    } catch (error) {
+        console.error('Det uppstod ett fel:', error.message);
+        return false;
+    }
+}
+const loginForm = document.querySelector(".loginform");
+if (loginForm) loginForm.addEventListener("submit", (event)=>{
+    event.preventDefault();
+    login();
+});
+const registerForm = document.querySelector(".registerform");
+if (registerForm) registerForm.addEventListener("submit", (event)=>{
+    event.preventDefault();
+    register();
+});
 
 },{}]},["iUuJv","fILKw"], "fILKw", "parcelRequirec020", {})
 

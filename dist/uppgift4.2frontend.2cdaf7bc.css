@@ -134,7 +134,7 @@ header {
   display: flex;
 }
 
-.form {
+.registerform, .loginform {
   color: #fff;
   background-color: #0d3c5b;
   border-radius: 12px;
@@ -144,11 +144,11 @@ header {
   line-height: 2em;
 }
 
-.form label {
+.registerform label, .loginform label {
   font-weight: bold;
 }
 
-.form input {
+.registerform input, .loginform input {
   width: 250px;
   padding: 7px;
 }

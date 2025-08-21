@@ -4,7 +4,7 @@
   "source": "src/index.html",
   "scripts": {
     "start": "parcel",
-    "build": "parcel build --no-cache"
+    "build": "parcel build src/index.html src/protected.html --no-cache"
   },
   "keywords": [],
   "author": "",
