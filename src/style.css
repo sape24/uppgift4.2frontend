@@ -151,3 +151,17 @@ header{
     padding: 7px;
     width: 250px;
 }
+
+.protectedcontainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.protectedcontainer article{
+    padding: 5%;
+    margin: 5%;
+    background-color: #0D3C5B;
+    border-radius: 12px;
+    color: white;
+}

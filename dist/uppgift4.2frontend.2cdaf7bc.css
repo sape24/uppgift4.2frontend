@@ -152,4 +152,18 @@ header {
   width: 250px;
   padding: 7px;
 }
+
+.protectedcontainer {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.protectedcontainer article {
+  color: #fff;
+  background-color: #0d3c5b;
+  border-radius: 12px;
+  margin: 5%;
+  padding: 5%;
+}
 /*# sourceMappingURL=uppgift4.2frontend.2cdaf7bc.css.map */
