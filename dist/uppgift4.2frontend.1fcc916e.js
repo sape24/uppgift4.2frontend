@@ -727,11 +727,14 @@ async function login() {
         });
         if (!response.ok) throw new Error("N\xe4tverksproblem - felaktigt svar fr\xe5n servern");
         let data = await response.json();
-        localStorage.setItem('token', data.response.token);
+        localStorage.setItem('token', data.response.token) //sparar jwt token i localstorage
+        ;
         console.log("token sparad", data.response.token);
         console.log(data);
-        let sucessfulLogin = await _protected();
-        if (sucessfulLogin) window.location.href = "protected.html";
+        let sucessfulLogin = await _protected() //anropar protected funktionen och väntar vad den skickar tillbaka
+        ;
+        if (sucessfulLogin) window.location.href = "protected.html" //om return va true i protected funktionen redirect till protected webbsida
+        ;
         else {
             console.error("\xc5tkomst nekad: token ogiltig eller saknas");
             let error = document.getElementById("errormessage");
@@ -742,28 +745,32 @@ async function login() {
     }
 }
 async function _protected() {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token') //hämtar token från localstorage
+    ;
     if (!token) {
-        console.error("ingen token hittades");
+        console.error("ingen token hittades") //om det inte finns någon token skickar error och returnar false
+        ;
         return false;
     }
     try {
         let response = await fetch('https://uppgift4-1backend.onrender.com/api/protected', {
             method: 'GET',
             headers: {
-                'Authorization': 'Bearer ' + token
+                'Authorization': 'Bearer ' + token //skickar med token i headers
             }
         });
         if (!response.ok) return false;
         let data = await response.json();
         console.log(data);
-        return true;
+        return true //om allt fungerar return true
+        ;
     } catch (error) {
         console.error('Det uppstod ett fel:', error.message);
         return false;
     }
 }
-const loginForm = document.querySelector(".loginform");
+const loginForm = document.querySelector(".loginform") //lägger till en preventdefault på formulären så sidan inte laddas om när man klickar submit
+;
 if (loginForm) loginForm.addEventListener("submit", (event)=>{
     event.preventDefault();
     login();
@@ -773,6 +780,40 @@ if (registerForm) registerForm.addEventListener("submit", (event)=>{
     event.preventDefault();
     register();
 });
+async function protectedData() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        console.error("\xc5tkomst nekad: Token ogiltig eller saknas");
+        window.location.href = "index.html";
+    }
+    try {
+        let response = await fetch('https://uppgift4-1backend.onrender.com/api/protected', {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token //skickar med token i headers
+            }
+        });
+        if (!response.ok) {
+            console.error("Fel intr\xe4ffat token ogiltig eller \xe5tkomst nekad");
+            localStorage.removeItem('token');
+            window.location.href = "index.html";
+            return;
+        }
+        let data = await response.json();
+        console.log(data);
+        const container = document.getElementById("protectedData") //Ändra DOM för att skriva ut data från fetchen 
+        ;
+        const title = document.createElement("h2");
+        title.textContent = "Lyckad inloggning! V\xe4lkommen";
+        const message = document.createElement("p");
+        message.textContent = data.message;
+        container.appendChild(title);
+        container.appendChild(message);
+    } catch (error) {
+        console.error('Det uppstod ett fel:', error.message);
+    }
+}
+if (location.pathname.includes("protected.html")) document.addEventListener("DOMContentLoaded", protectedData);
 
 },{}]},["iUuJv","fILKw"], "fILKw", "parcelRequirec020", {})
 

@@ -77,13 +77,13 @@ async function login() {
         
         let data = await response.json();
         
-        localStorage.setItem('token', data.response.token)
+        localStorage.setItem('token', data.response.token)                    //sparar jwt token i localstorage
         console.log("token sparad", data.response.token)
         console.log(data)
         
-        let sucessfulLogin = await protected()
+        let sucessfulLogin = await protected()                                //anropar protected funktionen och väntar vad den skickar tillbaka
         if(sucessfulLogin){
-            window.location.href = "protected.html"
+            window.location.href = "protected.html"                           //om return va true i protected funktionen redirect till protected webbsida
         }else{
             console.error("Åtkomst nekad: token ogiltig eller saknas")
         let error = document.getElementById("errormessage")
@@ -95,11 +95,11 @@ async function login() {
 } 
 
 
-async function protected() {
-    const token = localStorage.getItem('token')
+async function protected() {                                              //protected funktion med get route som skickar jwt token i headers
+    const token = localStorage.getItem('token')                            //hämtar token från localstorage
 
     if(!token){
-       console.error("ingen token hittades") 
+       console.error("ingen token hittades")                              //om det inte finns någon token skickar error och returnar false
        return false;
     }
 
@@ -107,7 +107,7 @@ async function protected() {
         let response = await fetch('https://uppgift4-1backend.onrender.com/api/protected', {
             method: 'GET',
             headers:{
-                'Authorization': 'Bearer ' + token
+                'Authorization': 'Bearer ' + token                                //skickar med token i headers
             }
         }) 
 
@@ -117,14 +117,14 @@ async function protected() {
 
         let data = await response.json()
         console.log(data)
-        return true
+        return true                                                             //om allt fungerar return true
     }catch(error){
         console.error('Det uppstod ett fel:', error.message)
         return false
     }
 }
 
-const loginForm = document.querySelector(".loginform")
+const loginForm = document.querySelector(".loginform")                      //lägger till en preventdefault på formulären så sidan inte laddas om när man klickar submit
 if(loginForm){
     loginForm.addEventListener("submit", (event) => {
         event.preventDefault()
@@ -138,4 +138,48 @@ if(registerForm){
         event.preventDefault()
         register()
     })
+}
+
+async function protectedData(){                                                   //funktion som verifierar att token finns och är giltig annars blir man tillbakaskickad till startsida
+    const token = localStorage.getItem('token')
+
+    if(!token){
+        console.error("Åtkomst nekad: Token ogiltig eller saknas")
+        window.location.href = "index.html"
+    }
+
+    try{
+        let response = await fetch('https://uppgift4-1backend.onrender.com/api/protected', {
+            method: 'GET',
+            headers:{
+                'Authorization': 'Bearer ' + token                                //skickar med token i headers
+            }
+        }) 
+
+        if(!response.ok){
+            console.error("Fel inträffat token ogiltig eller åtkomst nekad")
+            localStorage.removeItem('token')
+            window.location.href = "index.html"
+            return
+        }
+
+        let data = await response.json()
+        console.log(data)
+
+        const container = document.getElementById("protectedData")                               //Ändra DOM för att skriva ut data från fetchen 
+        const title = document.createElement("h2")
+        title.textContent = ("Lyckad inloggning! Välkommen")
+        const message = document.createElement("p")   
+        message.textContent = data.message
+
+        container.appendChild(title)
+        container.appendChild(message)
+        
+    }catch(error){
+        console.error('Det uppstod ett fel:', error.message)
+    }
+}
+
+if(location.pathname.includes("protected.html")){                                                 //då denna funktion ska enbart användas i den skydadde webbsidan anropas den enbart när DOM är färdigladdad i protected.html
+    document.addEventListener("DOMContentLoaded", protectedData)
 }
