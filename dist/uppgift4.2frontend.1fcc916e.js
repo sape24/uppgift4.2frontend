@@ -807,8 +807,14 @@ async function protectedData() {
         title.textContent = "Lyckad inloggning! V\xe4lkommen";
         const message = document.createElement("p");
         message.textContent = data.message;
+        const username = document.createElement("p");
+        username.textContent = "Anv\xe4ndarnamn: " + data.user.username;
+        const date = document.createElement("p");
+        date.textContent = "Registrerad: " + data.user.date;
         container.appendChild(title);
         container.appendChild(message);
+        container.appendChild(username);
+        container.appendChild(date);
     } catch (error) {
         console.error('Det uppstod ett fel:', error.message);
     }
